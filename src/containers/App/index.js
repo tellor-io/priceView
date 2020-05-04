@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react'
 import { Helmet } from 'react-helmet'
-import { Switch, Route } from 'react-router-dom'
 import { Layout } from 'antd'
 import styled from 'styled-components'
 import { HomePage } from 'components'
