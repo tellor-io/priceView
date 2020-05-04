@@ -22,7 +22,7 @@ const App = () => {
 
   return (
     <Fragment>
-      <Helmet defaultTitle="Travels - Test Project">
+      <Helmet defaultTitle="Tellor">
         <meta name="description" content="Travels project" />
       </Helmet>
       <StyledLayout>

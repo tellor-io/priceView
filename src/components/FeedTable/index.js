@@ -44,7 +44,7 @@ const StyledTable = styled(Table)`
 }
 `
 
-const contractAddress ="0xc47d2339077F5aC117dD1B2953D5c54a0c0B89fa"//"0x7d67E614d92b9D070839954dfd82ceEc7daFDAeD";
+const contractAddress ="0xFe41Cb708CD98C5B20423433309E55b53F79134a"//"0xc47d2339077F5aC117dD1B2953D5c54a0c0B89fa, 0x7d67E614d92b9D070839954dfd82ceEc7daFDAeD, 0xFe41Cb708CD98C5B20423433309E55b53F79134a";
 
 export default () => {
   const [priceLoading, setPriceLoading] = useState(true)
@@ -115,14 +115,11 @@ export default () => {
   };
 
   const handleOk = e => {
-    if(tip > 0){
+    if(tip >= 0){
       contract.methods.addTip(selectedID, tip).send({
         from: accounts[0],
         to: contractAddress,
-        value:0,
-        gasPrice: '20000000000'
       }).then((res)=>{
-        this.updateHandler()
         console.log("response: ", res)
       });
       setVisible(false)
@@ -143,6 +140,7 @@ export default () => {
       <StyledTable
         dataSource={tableData}
         bordered
+        pagination={false}
       >
         <Column title="Type" dataIndex="type" key="type" />
         <Column title="Last Update" dataIndex="price" key="price" />
