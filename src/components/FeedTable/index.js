@@ -1,7 +1,7 @@
 import React, {useEffect, useState, Fragment} from 'react'
 import styled from 'styled-components'
 import ReactLoading from 'react-loading'
-import { Table, Button, Modal, Input, Alert } from 'antd';
+import { Table, Button, Modal, Input, Alert, notification } from 'antd';
 import axios from 'axios'
 import _ from 'lodash'
 import getWeb3 from 'utils/getWeb3'
@@ -55,6 +55,7 @@ export default () => {
   const [visible, setVisible] = useState(false)
   const [accounts, setAccounts] = useState([])
   const [selectedID, setSelectedID] = useState(undefined)
+  const [isMetamask, setIsMetaMask] = useState(false)
   useEffect(() => {
     const apiPromises = []
     const priceAPIPromises = []
@@ -62,6 +63,7 @@ export default () => {
     async function web3Connect() {
       try {
         const web3 = await getWeb3();
+        setIsMetaMask(web3.currentProvider.isMetaMask)
         const accounts = await web3.eth.getAccounts();
         setAccounts(accounts)
         const instance = await new web3.eth.Contract(TellorFund.abi, contractAddress);
@@ -99,7 +101,7 @@ export default () => {
         })
       } catch (e) {
         alert(
-          `Failed to load web3, be sure to be connected to the right Metamask network`,
+          `Failed to load web3, be sure to be connected to the right Metamask network and reload teh browser!`,
         );
         console.error(e);
       }
@@ -110,22 +112,30 @@ export default () => {
   }, [])
 
   const showModal = (index) => {
-    setSelectedID(index + 1)
-    setVisible(true)
+    if (isMetamask) {
+      setSelectedID(index + 1)
+      setVisible(true)
+    } else {
+      notification['warning']({
+        message: 'Metamask not found',
+        description:
+          'Please intsall metamask on the browser!',
+      });
+    }
   };
 
   const handleOk = e => {
-    if(tip >= 0){
-      contract.methods.addTip(selectedID, tip).send({
-        from: accounts[0],
-        to: contractAddress,
-      }).then((res)=>{
-        console.log("response: ", res)
-      });
-      setVisible(false)
-    } else {
+      if(tip >= 0){
+        contract.methods.addTip(selectedID, tip).send({
+          from: accounts[0],
+          to: contractAddress,
+        }).then((res)=>{
+          console.log("response: ", res)
+        });
+        setVisible(false)
+      } else {
 
-    }
+      }
   };
 
   const handleCancel = e => {
