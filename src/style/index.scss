@@ -1,20 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-@media screen and (max-width: 1200px) {
-  .ant-table {
-    &-thead > tr,
-    &-tbody > tr {
-        > th,
-        > td {
-            display: block;
-            width: auto !important;
-            border-bottom: none !important;
-            &:last-child {
-            border-bottom: 1px solid #EEEEEE !important;
-            }
-        }
-    }
-  }
-}
+// @media screen and (max-width: 1200px) {
+//   .ant-table {
+//     &-thead > tr,
+//     &-tbody > tr {
+//         > th,
+//         > td {
+//             display: block;
+//             width: auto !important;
+//             border-bottom: none !important;
+//             border-left: 1px solid white;
+//             &:last-child {
+//             border-bottom: 1px solid #EEEEEE !important;
+//             }
+//         }
+//     }
+//   }
+// }
 
 
 body {
