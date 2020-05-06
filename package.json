@@ -32,7 +32,9 @@
     "eject": "react-app-rewired eject",
     "reactide-server": "webpack-dev-server --config reactide.config.js --mode development --hot",
     "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
-    "lint": "eslint src/*.js"
+    "lint": "eslint src/*.js",
+    "heroku-prebuild": "export NPM_CONFIG_PRODUCTION=false; export NODE_ENV=; NPM_CONFIG_PRODUCTION=false NODE_ENV=development npm install --only=dev --dev",
+    "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production;"
   },
   "eslintConfig": {
     "extends": "react-app"
