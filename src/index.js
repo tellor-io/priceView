@@ -1,15 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import './style/index.scss'
+import React from "react";
+import ReactDOM from "react-dom";
+// import './style/index.scss';
 
-import Routes from 'containers/App'
+import Routes from "containers/App";
 
-import * as serviceWorker from './serviceWorker'
+import * as serviceWorker from "./serviceWorker";
 
-const MOUNT_NODE = document.getElementById('root')
-ReactDOM.render(<Routes />,  MOUNT_NODE)
+const MOUNT_NODE = document.getElementById("root");
+ReactDOM.render(<Routes />, MOUNT_NODE);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister()
+serviceWorker.unregister();

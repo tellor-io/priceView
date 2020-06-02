@@ -1,24 +1,42 @@
-import React, {Fragment} from 'react'
-import { Helmet } from 'react-helmet'
-import { Layout } from 'antd'
-import styled from 'styled-components'
-import { HomePage } from 'components'
+import React, { Fragment } from "react";
+import { Helmet } from "react-helmet";
+import { Layout } from "antd";
+import styled from "styled-components";
+import { HomePage } from "components";
+import TellorLogoDark from "../../assets/Tellor__Logo--Dark.png";
 
-const StyledHeaderTellor = styled.span`
-  color: white;
-  font-size: 36px;
-`
-const StyledHeaderData = styled.span`
-  color: #53F1B6;
-  font-size: 36px;
-`
+const StyledBrandLink = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  img {
+    height: 60px;
+    width: auto;
+    display: inline-block;
+  }
+  span {
+    color: #5cfcb6;
+    font-size: 21px;
+    font-weight: 300;
+    margin-bottom: -11px;
+  }
+  @media (max-width: 800px) {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    span {
+      display: none;
+    }
+  }
+`;
 
 const StyledLayout = styled(Layout)`
-  height: 100%;
-`
+  height: 100vh;
+`;
 
 const App = () => {
-  const { Header,  Content } = Layout;
+  const { Header, Content } = Layout;
 
   return (
     <Fragment>
@@ -27,15 +45,17 @@ const App = () => {
       </Helmet>
       <StyledLayout>
         <Header>
-          <StyledHeaderTellor>tellor</StyledHeaderTellor>
-          <StyledHeaderData>data</StyledHeaderData>
+          <StyledBrandLink>
+            <img src={TellorLogoDark} />
+            <span>data</span>
+          </StyledBrandLink>
         </Header>
         <Content>
           <HomePage />
         </Content>
       </StyledLayout>
     </Fragment>
-  )
-}
+  );
+};
 
-export default App
+export default App;
