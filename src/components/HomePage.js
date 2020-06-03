@@ -1,24 +1,26 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import FeedTable from './FeedTable'
+import React, { useState } from "react";
+import styled from "styled-components";
+import FeedTable from "./FeedTable";
+import "../style/index.scss";
 
-const StyledHeader = styled.label`
+const StyledH1 = styled.h1`
   font-size: 36px;
-  color: white;
-`
+  margin-top: 25px;
+  margin-bottom: 25px;
+`;
 
 const StyledContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-`
+  min-height: 100vh;
+`;
 
 export default () => {
-
   return (
     <StyledContainer>
-      <StyledHeader>Tellor Data Feed</StyledHeader>
+      <StyledH1>Tellor Data Feed</StyledH1>
       <FeedTable />
     </StyledContainer>
-  )
-}
+  );
+};
