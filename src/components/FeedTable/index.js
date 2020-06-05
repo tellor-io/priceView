@@ -135,9 +135,10 @@ export default () => {
 
   if (totalTipsLoading || priceLoading)
     return <Lottie options={lottieOptions} height={120} width={120} />;
+
   return (
     <Fragment>
-      <Table dataSource={tableData} bordered pagination={false}>
+      <Table dataSource={tableData} bordered pagination={false} rowKey="type">
         <Column title="Type" dataIndex="type" key="type" />
         <Column title="Last Update" dataIndex="price" key="price" />
         <Column title="Current Tip" dataIndex="totalTip" key="totalTip" />
