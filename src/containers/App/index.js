@@ -1,10 +1,18 @@
 import React, { Fragment } from "react";
 import { Helmet } from "react-helmet";
 import { Layout } from "antd";
+import { RightCircleOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { HomePage } from "components";
 import { Footer } from "components/Footer";
 import TellorLogoDark from "../../assets/Tellor__Logo--Dark.png";
+
+const StyledHeader = styled.div`
+  display: flex;
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+`;
 
 const StyledBrandLink = styled.div`
   display: flex;
@@ -32,6 +40,31 @@ const StyledBrandLink = styled.div`
   }
 `;
 
+const StyledHeaderNav = styled.div`
+  display: inline-block;
+  margin-left: auto;
+  > button {
+    padding: 0px 15px !important;
+  }
+  > * {
+    margin-left: 25px;
+    font-size: 1.5em;
+    color: #5cfcb6;
+    // &:last-child {
+    //   border: 2px solid #5cfcb6;
+    //   color: #5cfcb6;
+    //   border-radius: 50px;
+    //   padding: 10px 15px;
+    //   vertical-align: middle;
+    // }
+
+    @media (max-width: 800px) {
+      font-size: 1em;
+      margin-left: 15px;
+    }
+  }
+`;
+
 const StyledLayout = styled(Layout)`
   min-height: 100vh;
 `;
@@ -46,10 +79,17 @@ const App = () => {
       </Helmet>
       <StyledLayout>
         <Header>
-          <StyledBrandLink>
-            <img src={TellorLogoDark} />
-            <span>data</span>
-          </StyledBrandLink>
+          <StyledHeader>
+            <StyledBrandLink>
+              <img src={TellorLogoDark} />
+              <span>data</span>
+            </StyledBrandLink>
+            <StyledHeaderNav>
+              <a href="#" rel="noopener noreferrer" target="_blank">
+                Dispute Center <RightCircleOutlined />
+              </a>
+            </StyledHeaderNav>
+          </StyledHeader>
         </Header>
         <Content>
           <HomePage />
