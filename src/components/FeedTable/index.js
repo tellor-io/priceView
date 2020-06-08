@@ -162,8 +162,14 @@ export default () => {
       <Modal
         title="Input Tip"
         visible={visible}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        footer={[
+          <Button key="back" type="default" onClick={handleCancel}>
+            Cancel
+          </Button>,
+          <Button key="submit" type="primary" onClick={handleOk}>
+            Submit
+          </Button>,
+        ]}
       >
         {tip < 0 && (
           <Alert
@@ -173,7 +179,7 @@ export default () => {
           />
         )}
         <Input
-          placeholder="Basic usage"
+          placeholder="Amount of TRB "
           onChange={(e) => setTip(e.target.value)}
         />
       </Modal>

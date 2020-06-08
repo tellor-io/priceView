@@ -79,7 +79,7 @@ h6 {
 .ant-layout-header {
   background: #000;
   height: auto;
-  padding: 15px 50px;
+  padding: 0px 50px;
 }
 
 // Buttons
@@ -91,16 +91,12 @@ button {
 .ant-btn {
   border-radius: 50px;
   color: $tellor-green;
-  // background: transparent;
   &:hover {
-    // background: transparent;
   }
   &-primary {
-    // background: $tellor-green;
     color: #444444;
     &:hover,
     &:focus {
-      // background: $tellor-green;
       color: #444444;
     }
   }
@@ -108,8 +104,12 @@ button {
     background: transparent;
     &:hover,
     &:focus {
-      background: transparent;
+      background: $hot-green;
+      color: #444444;
     }
+  }
+  &:disabled {
+    opacity: 0.25;
   }
 }
 
