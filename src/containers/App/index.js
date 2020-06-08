@@ -29,6 +29,7 @@ const StyledBrandLink = styled.div`
     font-size: 21px;
     font-weight: 300;
     margin-bottom: -11px;
+    font-weight: 500;
   }
   @media (max-width: 800px) {
     flex-direction: column;
@@ -85,7 +86,11 @@ const App = () => {
               <span>data</span>
             </StyledBrandLink>
             <StyledHeaderNav>
-              <a href="#" rel="noopener noreferrer" target="_blank">
+              <a
+                href="https://tellordisputecenter.herokuapp.com/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
                 Dispute Center <RightCircleOutlined />
               </a>
             </StyledHeaderNav>
