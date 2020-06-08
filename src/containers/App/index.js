@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { Layout } from "antd";
 import styled from "styled-components";
 import { HomePage } from "components";
+import { Footer } from "components/Footer";
 import TellorLogoDark from "../../assets/Tellor__Logo--Dark.png";
 
 const StyledBrandLink = styled.div`
@@ -32,7 +33,7 @@ const StyledBrandLink = styled.div`
 `;
 
 const StyledLayout = styled(Layout)`
-  height: 100vh;
+  min-height: 100vh;
 `;
 
 const App = () => {
@@ -53,6 +54,7 @@ const App = () => {
         <Content>
           <HomePage />
         </Content>
+        <Footer />
       </StyledLayout>
     </Fragment>
   );
