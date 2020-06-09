@@ -82,12 +82,12 @@ const App = () => {
         <Header>
           <StyledHeader>
             <StyledBrandLink>
-              <img src={TellorLogoDark} />
+              <img src={TellorLogoDark} alt="tellor" />
               <span>data</span>
             </StyledBrandLink>
             <StyledHeaderNav>
               <a
-                href="https://tellordisputecenter.herokuapp.com/"
+                href="https://disputes.tellorscan.com/"
                 rel="noopener noreferrer"
                 target="_blank"
               >
