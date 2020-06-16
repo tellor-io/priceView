@@ -66,9 +66,13 @@ export default () => {
         });
         Promise.all(apiPromises).then(function(values) {
           const totalTips = [..._.map(values, "data")];
-          totalTips.map(
-            (tipObj, index) => (tempTableData[index].totalTip = tipObj.totalTip)
-          );
+          totalTips.map((tipObj, index) => {
+            tempTableData[index].totalTip = tipObj.totalTip;
+            tempTableData[index].granularity = tipObj.granularity;
+
+            return tempTableData[index];
+          });
+
           setTableData(tempTableData);
           setTotalTipsLoading(false);
         });
@@ -76,6 +80,10 @@ export default () => {
           const prices = [..._.map(values, "data")];
           prices.map((priceObj, index) => {
             tempTableData[index].price = priceObj.value;
+            tempTableData[index].granPrice =
+              +priceObj.value / +tempTableData[index].granularity;
+
+            return tempTableData[index];
           });
           setTableData(tempTableData);
           setPriceLoading(false);
@@ -140,7 +148,8 @@ export default () => {
     <Fragment>
       <Table dataSource={tableData} bordered pagination={false} rowKey="type">
         <Column title="Type" dataIndex="type" key="type" />
-        <Column title="Last Update" dataIndex="price" key="price" />
+        <Column title="Last Value" dataIndex="price" key="price" />
+        <Column title="Price" dataIndex="granPrice" key="granPrice" />
         <Column title="Current Tip" dataIndex="totalTip" key="totalTip" />
         <Column
           title=""
