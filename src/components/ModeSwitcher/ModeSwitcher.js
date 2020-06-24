@@ -21,7 +21,7 @@ const darkThemePropertiesMap = {
 };
 
 const lightThemePropertiesMap = {
-  background: "#fff",
+  background: "#EAFFF6",
   "background-2": "#fff",
   "color-primary-1": "#5cfcb6",
   "color-primary-2": "#252525",

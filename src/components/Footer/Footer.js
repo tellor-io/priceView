@@ -42,14 +42,14 @@ const StyledFooterLinks = styled.div`
 
 const Footer = () => {
   return (
-    <StyledFooter>
+    <div className="Footer">
       <p style={{ textAlign: "center" }}>
         © 2020{" "}
         <a href="https://tellor.io" rel="noopener noreferrer" target="_blank">
           Tellor.io
         </a>
       </p>
-      <StyledFooterLinks>
+      <div className="Footer__Links">
         <a
           href="https://twitter.com/wearetellor"
           rel="noopener noreferrer"
@@ -95,8 +95,8 @@ const Footer = () => {
         >
           <Icon component={DiscordSvg} />
         </a>
-      </StyledFooterLinks>
-    </StyledFooter>
+      </div>
+    </div>
   );
 };
 
