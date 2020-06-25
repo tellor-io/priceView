@@ -44,7 +44,7 @@ export default () => {
           })
         );
         setTableData(tempTableData);
-        PSRs.map((item, index) => {
+        PSRs.forEach((item, index) => {
           apiPromises.push(
             new Promise((resolve, reject) => {
               axios
@@ -64,30 +64,34 @@ export default () => {
             })
           );
         });
-        Promise.all(apiPromises).then(function(values) {
-          const totalTips = [..._.map(values, "data")];
-          totalTips.map((tipObj, index) => {
-            tempTableData[index].totalTip = tipObj.totalTip;
-            tempTableData[index].granularity = tipObj.granularity;
+        Promise.all(apiPromises)
+          .then(function(values) {
+            const totalTips = [..._.map(values, "data")];
+            totalTips.map((tipObj, index) => {
+              tempTableData[index].totalTip = tipObj.totalTip;
+              tempTableData[index].granularity = tipObj.granularity;
 
-            return tempTableData[index];
+              return tempTableData[index];
+            });
+
+            setTableData(tempTableData);
+            setTotalTipsLoading(false);
+          })
+          .then(() => {
+            Promise.all(priceAPIPromises).then((values) => {
+              const prices = [..._.map(values, "data")];
+              prices.map((priceObj, index) => {
+                tempTableData[index].price = priceObj.value;
+                tempTableData[index].granPrice = (
+                  +priceObj.value / +tempTableData[index].granularity
+                ).toFixed(2);
+
+                return tempTableData[index];
+              });
+              setTableData(tempTableData);
+              setPriceLoading(false);
+            });
           });
-
-          setTableData(tempTableData);
-          setTotalTipsLoading(false);
-        });
-        Promise.all(priceAPIPromises).then((values) => {
-          const prices = [..._.map(values, "data")];
-          prices.map((priceObj, index) => {
-            tempTableData[index].price = priceObj.value;
-            tempTableData[index].granPrice =
-              +priceObj.value / +tempTableData[index].granularity;
-
-            return tempTableData[index];
-          });
-          setTableData(tempTableData);
-          setPriceLoading(false);
-        });
       } catch (e) {
         alert(
           `Failed to load web3, be sure to be connected to the right Metamask network and reload teh browser!`
@@ -97,6 +101,8 @@ export default () => {
     }
 
     web3Connect();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const showModal = (index) => {
@@ -128,7 +134,6 @@ export default () => {
   };
 
   const handleCancel = (e) => {
-    console.log(e);
     setVisible(false);
   };
 
@@ -148,8 +153,7 @@ export default () => {
     <Fragment>
       <Table dataSource={tableData} bordered pagination={false} rowKey="type">
         <Column title="Type" dataIndex="type" key="type" />
-        <Column title="Last Value" dataIndex="price" key="price" />
-        <Column title="Price" dataIndex="granPrice" key="granPrice" />
+        <Column title="Last Value" dataIndex="granPrice" key="granPrice" />
         <Column title="Current Tip" dataIndex="totalTip" key="totalTip" />
         <Column
           title=""
