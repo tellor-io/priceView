@@ -3,7 +3,7 @@ import { Table, Button, Modal, Input, Alert, notification } from "antd";
 import axios from "axios";
 import _ from "lodash";
 import getWeb3 from "utils/getWeb3";
-import PSRs from "utils/psr";
+import { PSRs } from "utils/psr";
 import TellorFund from "utils/contracts/TellorFund";
 import Lottie from "react-lottie";
 import animationData from "../../assets/Tellor__Loader.json";
@@ -38,17 +38,19 @@ export default () => {
         );
         setContract(instance);
 
-        PSRs.map((type) =>
+        Object.keys(PSRs).forEach((id) =>
           tempTableData.push({
-            type,
+            id,
+            type: PSRs[id].name,
           })
         );
         setTableData(tempTableData);
-        PSRs.forEach((item, index) => {
+
+        Object.keys(PSRs).forEach((id) => {
           apiPromises.push(
             new Promise((resolve, reject) => {
               axios
-                .get(`http://api.tellorscan.com/requestinfo/${index + 1}`)
+                .get(`http://api.tellorscan.com/requestinfo/${id}`)
                 .then((res) => {
                   resolve(res);
                 });
@@ -56,11 +58,9 @@ export default () => {
           );
           priceAPIPromises.push(
             new Promise((resolve, reject) => {
-              axios
-                .get(`http://api.tellorscan.com/price/${index + 1}`)
-                .then((res) => {
-                  resolve(res);
-                });
+              axios.get(`http://api.tellorscan.com/price/${id}`).then((res) => {
+                resolve(res);
+              });
             })
           );
         });
@@ -69,7 +69,6 @@ export default () => {
             const totalTips = [..._.map(values, "data")];
             totalTips.map((tipObj, index) => {
               tempTableData[index].totalTip = tipObj.totalTip;
-              tempTableData[index].granularity = tipObj.granularity;
 
               return tempTableData[index];
             });
@@ -81,10 +80,9 @@ export default () => {
             Promise.all(priceAPIPromises).then((values) => {
               const prices = [..._.map(values, "data")];
               prices.map((priceObj, index) => {
-                tempTableData[index].price = priceObj.value;
-                tempTableData[index].granPrice = (
-                  +priceObj.value / +tempTableData[index].granularity
-                ).toFixed(2);
+                tempTableData[index].price =
+                  +priceObj.value / +PSRs[tempTableData[index].id].granularity;
+                // ).toFixed(2);
 
                 return tempTableData[index];
               });
@@ -151,9 +149,9 @@ export default () => {
 
   return (
     <Fragment>
-      <Table dataSource={tableData} bordered pagination={false} rowKey="type">
+      <Table dataSource={tableData} bordered pagination={false} rowKey="id">
         <Column title="Type" dataIndex="type" key="type" />
-        <Column title="Last Value" dataIndex="granPrice" key="granPrice" />
+        <Column title="Last Value" dataIndex="price" key="price" />
         <Column title="Current Tip" dataIndex="totalTip" key="totalTip" />
         <Column
           title=""
@@ -175,6 +173,7 @@ export default () => {
       <Modal
         title="Input Tip"
         visible={visible}
+        onCancel={handleCancel}
         footer={[
           <Button key="back" type="default" onClick={handleCancel}>
             Cancel

@@ -44,6 +44,16 @@ const ModeSwitcher = ({ setLogo }) => {
   });
 
   useEffect(() => {
+    const defaultTheme = localStorage.getItem("viewMode");
+
+    if (theme.theme !== defaultTheme) {
+      switchTheme();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     for (const property in theme.themePropertiesMap) {
       if (theme.themePropertiesMap[property]) {
         setThemeProperty(property, theme.themePropertiesMap[property]);
@@ -54,15 +64,18 @@ const ModeSwitcher = ({ setLogo }) => {
 
   const switchTheme = () => {
     const isDarkTheme = theme.theme === "dark";
+    const newTheme = isDarkTheme ? "light" : "dark";
 
     setTheme({
-      theme: isDarkTheme ? "light" : "dark",
+      theme: newTheme,
       themePropertiesMap: isDarkTheme
         ? lightThemePropertiesMap
         : darkThemePropertiesMap,
     });
 
     setLogo(isDarkTheme ? TellorLogoLight : TellorLogoDark);
+
+    window.localStorage.setItem("viewMode", newTheme);
   };
 
   const setThemeProperty = (name, value) => {
