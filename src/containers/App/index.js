@@ -18,7 +18,7 @@ const App = () => {
   return (
     <Fragment>
       <Helmet defaultTitle="Tellor">
-        <meta name="description" content="Travels project" />
+        <meta name="description" content="Tellor Price Data" />
       </Helmet>
       <StyledLayout>
         <Header>
