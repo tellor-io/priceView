@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import { Helmet } from "react-helmet";
 import { Layout } from "antd";
 import styled from "styled-components";
@@ -7,6 +7,7 @@ import { HomePage } from "components";
 import { Footer } from "components/Footer";
 
 import Navigation from "components/Navigation/Navigation";
+import { CurrentUserContext } from "../../contexts/Store";
 
 const StyledLayout = styled(Layout)`
   min-height: 100vh;
@@ -14,6 +15,7 @@ const StyledLayout = styled(Layout)`
 
 const App = () => {
   const { Header, Content } = Layout;
+  const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
 
   return (
     <Fragment>
@@ -22,7 +24,7 @@ const App = () => {
       </Helmet>
       <StyledLayout>
         <Header>
-          <Navigation />
+          <Navigation currentUser={currentUser} setCurrentUser={setCurrentUser}/>
         </Header>
         <Content>
           <HomePage />
