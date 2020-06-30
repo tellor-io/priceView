@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import { RightCircleOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import TellorLogoDark from "../../assets/Tellor__Logo--Dark.png";
 import ModeSwitcher from "components/ModeSwitcher/ModeSwitcher";
 import {Web3SignIn} from "../shared/Web3SignIn";
+import {CurrentUserContext} from "../../contexts/Store";
 
 const StyledHeader = styled.div`
   display: flex;
@@ -70,6 +71,7 @@ const truncateAddr = (addr) => {
 
 const Navigation = () => {
   const [logo, setLogo] = useState(TellorLogoDark);
+  const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
 
   return (
     <StyledHeader>
@@ -86,10 +88,10 @@ const Navigation = () => {
         >
           Dispute Center <RightCircleOutlined />
         </a>
-        {!this.props.currentUser ? (
-            <Web3SignIn setCurrentUser={this.props.setCurrentUser} />
+        {!currentUser ? (
+            <Web3SignIn setCurrentUser={setCurrentUser} />
         ) : (
-            <span>{truncateAddr(this.props.currentUser.username)}</span>
+            <span>{truncateAddr(currentUser.username)}</span>
         )}
       </StyledHeaderNav>
     </StyledHeader>
