@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { RightCircleOutlined } from "@ant-design/icons";
 import styled from "styled-components";
-
 import TellorLogoDark from "../../assets/Tellor__Logo--Dark.png";
 import ModeSwitcher from "components/ModeSwitcher/ModeSwitcher";
+import {Web3SignIn} from "../shared/Web3SignIn";
 
 const StyledHeader = styled.div`
   display: flex;
@@ -64,6 +64,10 @@ const StyledHeaderNav = styled.div`
   }
 `;
 
+const truncateAddr = (addr) => {
+  return addr.slice(0, 6) + '...';
+};
+
 const Navigation = () => {
   const [logo, setLogo] = useState(TellorLogoDark);
 
@@ -82,6 +86,11 @@ const Navigation = () => {
         >
           Dispute Center <RightCircleOutlined />
         </a>
+        {!this.props.currentUser ? (
+            <Web3SignIn setCurrentUser={this.props.setCurrentUser} />
+        ) : (
+            <span>{truncateAddr(this.props.currentUser.username)}</span>
+        )}
       </StyledHeaderNav>
     </StyledHeader>
   );
