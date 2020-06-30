@@ -1,18 +1,21 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment, useContext } from "react";
 import { Table, Button, Modal, Input, Alert, notification } from "antd";
 import axios from "axios";
 import _ from "lodash";
-import getWeb3 from "utils/getWeb3";
 import { PSRs } from "utils/psr";
 import TellorFund from "utils/contracts/TellorFund";
 import Lottie from "react-lottie";
 import animationData from "../../assets/Tellor__Loader.json";
+import { CurrentUserContext, Web3ModalContext } from "../../contexts/Store";
+import { createWeb3User, signInWithWeb3 } from "../../utils/auth";
 
 const { Column } = Table;
 
 const contractAddress = "0xFe41Cb708CD98C5B20423433309E55b53F79134a"; //"0xc47d2339077F5aC117dD1B2953D5c54a0c0B89fa, 0xFe41Cb708CD98C5B20423433309E55b53F79134a";
 
 export default () => {
+  const [web3Modal, setWeb3Modal] = useContext(Web3ModalContext);
+  const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
   const [priceLoading, setPriceLoading] = useState(true);
   const [totalTipsLoading, setTotalTipsLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
@@ -21,23 +24,14 @@ export default () => {
   const [visible, setVisible] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [selectedID, setSelectedID] = useState(undefined);
-  const [isMetamask, setIsMetaMask] = useState(false);
+
   useEffect(() => {
     const apiPromises = [];
     const priceAPIPromises = [];
     let tempTableData = [...tableData];
-    async function web3Connect() {
-      try {
-        const web3 = await getWeb3();
-        setIsMetaMask(web3.currentProvider.isMetaMask);
-        const accounts = await web3.eth.getAccounts();
-        setAccounts(accounts);
-        const instance = await new web3.eth.Contract(
-          TellorFund.abi,
-          contractAddress
-        );
-        setContract(instance);
 
+    async function loadData() {
+      try {
         Object.keys(PSRs).forEach((id) =>
           tempTableData.push({
             id,
@@ -98,20 +92,29 @@ export default () => {
       }
     }
 
-    web3Connect();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    loadData();
   }, []);
 
-  const showModal = (index) => {
-    if (isMetamask) {
+  const showModal = async (index) => {
+    try {
+      const w3c = await signInWithWeb3();
+      const accounts = await w3c.web3.eth.getAccounts();
+
+      setAccounts(accounts);
+      setWeb3Modal(w3c);
+      const user = createWeb3User(accounts[0]);
+
+      setCurrentUser(user);
+      const instance = await new w3c.web3.eth.Contract(
+        TellorFund.abi,
+        contractAddress
+      );
+
+      setContract(instance);
       setSelectedID(index + 1);
       setVisible(true);
-    } else {
-      notification["warning"]({
-        message: "Metamask not found",
-        description: "Please install metamask on the browser!",
-      });
+    } catch (error) {
+      console.log('web3Modal error', error);
     }
   };
 
