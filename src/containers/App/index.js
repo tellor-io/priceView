@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 import { HomePage } from "components";
 import { Footer } from "components/Footer";
-
 import Navigation from "components/Navigation/Navigation";
 
 const StyledLayout = styled(Layout)`
