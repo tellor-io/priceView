@@ -11,7 +11,10 @@ import { createWeb3User, signInWithWeb3 } from "../../utils/auth";
 
 const { Column } = Table;
 
-const contractAddress = "0xFe41Cb708CD98C5B20423433309E55b53F79134a"; //"0xc47d2339077F5aC117dD1B2953D5c54a0c0B89fa, 0xFe41Cb708CD98C5B20423433309E55b53F79134a";
+const contractAddressesMap = {
+  1: '0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5',
+  4: '0xFe41Cb708CD98C5B20423433309E55b53F79134a',
+}
 
 export default () => {
   const [web3Modal, setWeb3Modal] = useContext(Web3ModalContext);
@@ -107,7 +110,7 @@ export default () => {
       setCurrentUser(user);
       const instance = await new w3c.web3.eth.Contract(
         TellorFund.abi,
-        contractAddress
+        contractAddressesMap[await w3c.web3.eth.getChainId()],
       );
 
       setContract(instance);
@@ -118,13 +121,13 @@ export default () => {
     }
   };
 
-  const handleOk = (e) => {
+  const handleOk = async (e) => {
     if (tip >= 0) {
       contract.methods
         .addTip(selectedID, tip)
         .send({
           from: accounts[0],
-          to: contractAddress,
+          to: contractAddressesMap[await web3Modal.web3.eth.getChainId()],
         })
         .then((res) => {
           console.log("response: ", res);
