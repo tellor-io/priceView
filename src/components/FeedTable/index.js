@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment, useContext } from "react";
-import { Table, Button, Modal, Input, Alert, notification } from "antd";
+import { Table, Button, Modal, Input, Alert } from "antd";
 import axios from "axios";
 import _ from "lodash";
 import { PSRs } from "utils/psr";
@@ -12,13 +12,13 @@ import { createWeb3User, signInWithWeb3 } from "../../utils/auth";
 const { Column } = Table;
 
 const contractAddressesMap = {
-  1: '0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5',
-  4: '0xFe41Cb708CD98C5B20423433309E55b53F79134a',
-}
+  1: "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+  4: "0xFe41Cb708CD98C5B20423433309E55b53F79134a",
+};
 
 export default () => {
   const [web3Modal, setWeb3Modal] = useContext(Web3ModalContext);
-  const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
+  const [, setCurrentUser] = useContext(CurrentUserContext);
   const [priceLoading, setPriceLoading] = useState(true);
   const [totalTipsLoading, setTotalTipsLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
@@ -96,6 +96,8 @@ export default () => {
     }
 
     loadData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const showModal = async (index) => {
@@ -110,14 +112,14 @@ export default () => {
       setCurrentUser(user);
       const instance = await new w3c.web3.eth.Contract(
         TellorFund.abi,
-        contractAddressesMap[await w3c.web3.eth.getChainId()],
+        contractAddressesMap[await w3c.web3.eth.getChainId()]
       );
 
       setContract(instance);
       setSelectedID(index + 1);
       setVisible(true);
     } catch (error) {
-      console.log('web3Modal error', error);
+      console.log("web3Modal error", error);
     }
   };
 

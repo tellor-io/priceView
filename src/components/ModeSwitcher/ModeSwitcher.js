@@ -54,6 +54,7 @@ const ModeSwitcher = ({ setLogo }) => {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line
     for (const property in theme.themePropertiesMap) {
       if (theme.themePropertiesMap[property]) {
         setThemeProperty(property, theme.themePropertiesMap[property]);
