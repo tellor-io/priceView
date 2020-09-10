@@ -146,13 +146,13 @@ export default () => {
   };
 
   const isTipValid = () => {
-    const numericTip = parseFloat(tip.replaceAll(' ', '').replaceAll(',', '.'));
+    const numericTip = parseFloat(tip.replaceAll(',', '.'));
 
     return !isNaN(numericTip) && numericTip > 0;
   }
 
   const tipToWei = () => {
-      return web3Modal.web3.utils.toWei(tip.replaceAll(' ', '').replaceAll(',', '.'), 'ether');
+      return web3Modal.web3.utils.toWei(tip.replaceAll(',', '.'), 'ether');
   }
 
   const lottieOptions = {
