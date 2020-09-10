@@ -124,12 +124,12 @@ export default () => {
   };
 
   const handleOk = async (e) => {
-    if (!isTipValid) {
+    if (!isTipValid()) {
       return;
     }
 
     contract.methods
-      .addTip(selectedID, tipToBN())
+      .addTip(selectedID, tipToWei())
       .send({
         from: accounts[0],
         to: contractAddressesMap[await web3Modal.web3.eth.getChainId()],
@@ -148,13 +148,11 @@ export default () => {
   const isTipValid = () => {
     const numericTip = parseFloat(tip.replaceAll(' ', '').replaceAll(',', '.'));
 
-    return !isNaN(numericTip) && numericTip >= 0;
+    return !isNaN(numericTip) && numericTip > 0;
   }
 
-  const tipToBN = () => {
-    return web3Modal.web3.utils.toBN(
-      web3Modal.web3.utils.toWei(tip.replaceAll(' ', '').replaceAll(',', '.'), 'ether'),
-    );
+  const tipToWei = () => {
+      return web3Modal.web3.utils.toWei(tip.replaceAll(' ', '').replaceAll(',', '.'), 'ether');
   }
 
   const lottieOptions = {
