@@ -124,24 +124,38 @@ export default () => {
   };
 
   const handleOk = async (e) => {
-    if (tip >= 0) {
-      contract.methods
-        .addTip(selectedID, tip)
-        .send({
-          from: accounts[0],
-          to: contractAddressesMap[await web3Modal.web3.eth.getChainId()],
-        })
-        .then((res) => {
-          console.log("response: ", res);
-        });
-      setVisible(false);
-    } else {
+    if (!isTipValid) {
+      return;
     }
+
+    contract.methods
+      .addTip(selectedID, tipToBN())
+      .send({
+        from: accounts[0],
+        to: contractAddressesMap[await web3Modal.web3.eth.getChainId()],
+      })
+      .then((res) => {
+        console.log("response: ", res);
+      });
+
+    setVisible(false);
   };
 
   const handleCancel = (e) => {
     setVisible(false);
   };
+
+  const isTipValid = () => {
+    const numericTip = parseFloat(tip.replaceAll(' ', '').replaceAll(',', '.'));
+
+    return !isNaN(numericTip) && numericTip >= 0;
+  }
+
+  const tipToBN = () => {
+    return web3Modal.web3.utils.toBN(
+      web3Modal.web3.utils.toWei(tip.replaceAll(' ', '').replaceAll(',', '.'), 'ether'),
+    );
+  }
 
   const lottieOptions = {
     loop: true,
