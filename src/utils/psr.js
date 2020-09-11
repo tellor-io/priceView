@@ -50,4 +50,6 @@ export const PSRs = {
   "49": { name: "BCH / USD", granularity: "1000000" },
   "50": { name: "TRB / USD", granularity: "1000000" },
   "51": { name: "XMR / USD", granularity: "1000000" },
+  "52": { name: "XFT / USD", granularity: "1000000" },
+  "53": { name: "BTC Dominance", granularity: "1000000" },
 };
