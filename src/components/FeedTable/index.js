@@ -62,7 +62,7 @@ export default () => {
           );
         });
         Promise.all(apiPromises)
-          .then(function(values) {
+          .then(function (values) {
             const totalTips = [..._.map(values, "data")];
             totalTips.map((tipObj, index) => {
               tempTableData[index].totalTip = tipObj.totalTip;
@@ -78,7 +78,7 @@ export default () => {
               const prices = [..._.map(values, "data")];
               prices.map((priceObj, index) => {
                 tempTableData[index].price =
-                  +priceObj.value / +PSRs[tempTableData[index].id].granularity;
+                  +priceObj[0].value / +PSRs[tempTableData[index].id].granularity;
                 // ).toFixed(2);
 
                 return tempTableData[index];
@@ -152,7 +152,7 @@ export default () => {
   }
 
   const tipToWei = () => {
-      return web3Modal.web3.utils.toWei(tip.replaceAll(',', '.'), 'ether');
+    return web3Modal.web3.utils.toWei(tip.replaceAll(',', '.'), 'ether');
   }
 
   const lottieOptions = {
