@@ -132,6 +132,7 @@ export default () => {
       .addTip(selectedID, tipToWei())
       .send({
         from: accounts[0],
+        gas: 300000,
         to: contractAddressesMap[await web3Modal.web3.eth.getChainId()],
       })
       .then((res) => {
