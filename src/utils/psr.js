@@ -55,4 +55,5 @@ export const PSRs = {
   "54": { name: "WAVES/USD", granularity: "1000000" },
   "55": { name: "OGN/USD", granularity: "1000000" },
   "56": { name: "VIXEOD", granularity: "1000000" },
+  "57": { name: "DEFITVL", granularity: "1000000" },
 }

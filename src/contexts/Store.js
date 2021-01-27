@@ -9,14 +9,11 @@ export const Web3ModalContext = createContext();
 export const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider,
-    options: {
-      infuraId: process.env.REACT_APP_INFURA_URI.split('/').pop(),
-    },
   },
 };
 
 
-const Store = ({children}) => {
+const Store = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
   const [web3Modal, setWeb3Modal] = useState(
     new Web3Modal({
